@@ -9,12 +9,12 @@ Project vision:
 
 Phase 1:
 Checklist:
-- basic chasis
-- defined sockets
-- two functional wheels
-- a simple weapon part
-- an assemblable robot
-- recalculate basic stats
+x basic chasis
+x defined sockets
+x two functional wheels
+x a simple weapon part
+x an assemblable robot
+x recalculate basic stats
 
 Goal: project structure, robot domain, basic buld flow, MVC conexion, a simple modular robot existing
 
@@ -155,11 +155,12 @@ Assets/Project/
  │    │	│	├── BuildSelectionModel (C#): what part of the catalog is selected
  │    │	│	└── BuildPreviewModel (C#): current preview state (piece is trying to place, target socket, current rot, is valid placement)
  │    │	├── Controllers/
- │    │	│	├── BuildController (C#): main controller of the building mode (listen input, update preview, validate placement, execute place/remove, update robot and UI)
+ │    │	│	├── |BuildController (C#): main controller of the building mode (listen input, update preview, validate placement, execute place/remove, update robot and UI)
  │    │	│	├── BuildInputController (C#): translate user input into building actions (select, place, remove, rotate)
  │    │	│	├── BuildPreviewController (C#): control the visual preview with the logic state
  │    │	│	└── PartCatalogController (C#): connect UI catalog with selection of the build mode
  │    │	├── Views/
+ │    │	│	├── |BuildView (Monobehaviour): represents the building mode
  │    │	│	├── BuildPreviewView (Monobehaviour): show part ghost, green/red depending on validity, follo curren socket
  │    │	│	├── *BuildGridView (Monobehaviour): if clear representation of the layout/socket in building mode wanted
  │    │	│	├── SocketHighlighView (Monobehaviour): highlight valid sockets
