@@ -66,6 +66,7 @@ Checklist:
 
 
 * is for later implementations if needed
+| is scripts that are already on the project
 
 Assets/Project/
  ├── Art/
@@ -98,8 +99,8 @@ Assets/Project/
  │    │	│	├── ITickable (Interface): for systems that required manual update from bootstrap
  │    │	│	├── IDisposableGameService (Interface): release subscriptions/events if a services that live by scene
  │    │	│	├── ICommand (Interface): base for actions like place/remove
- │    │	│	├── IView (Interface): base interface for views
- │    │	│	└── IController (Interface): base interface for controllers
+ │    │	│	├── |IView (Interface): base interface for views
+ │    │	│	└── |IController (Interface): base interface for controllers
  │    │	├── Services/
  │    │	│	├── IdGeneratorService (C#): generate ids for parts and robots
  │    │	│	├── *GameTimeService (C#): if decoupled timers are needed later on 
@@ -116,35 +117,35 @@ Assets/Project/
  │    │		└── RobotSpawnData (C#): minimum data to instantiate the robot on the arena
  │    ├── Robot/
  │    │	├── Models/
- │    │	│	├── RobotModel (C#): represent complete robot state (id, parts, stats, destroyed or active)
- │    │	│	├── RobotPartModel (C#): represent a placed part (id, type, hp, socket, destroyed or detached)
- │    │	│	├── RobotStatsModel (C#): represent added stat to the robot (mass, hp, momement power, energy use, weapon power)
- │    │	│	├── SocketModel (C#): represent robot logic socket (id, type allowed, occupation, orientation)
+ │    │	│	├── |RobotModel (C#): represent complete robot state (id, parts, stats, destroyed or active)
+ │    │	│	├── |RobotPartModel (C#): represent a placed part (id, type, hp, socket, destroyed or detached)
+ │    │	│	├── |RobotStatsModel (C#): represent added stat to the robot (mass, hp, momement power, energy use, weapon power)
+ │    │	│	├── |SocketModel (C#): represent robot logic socket (id, type allowed, occupation, orientation)
  │    │	│	└── WeaponStateModel (C#): runtime state of weapon (active?, rpm if spinner, cooldwon, power use)
  │    │	├── Controllers/
- │    │	│	├── RobotController (C#): main controller of a robot (connect model and view, answer to changes, ask for stats calculation, delegate locomotio/weapon/damage  to smaller systems)
+ │    │	│	├── |RobotController (C#): main controller of a robot (connect model and view, answer to changes, ask for stats calculation, delegate locomotio/weapon/damage  to smaller systems)
  │    │	│	├── RobotLocomotionController (C#): translate input to robot movement (robot stats, physic view, wheels/engines availables)
  │    │	│	├── RobotWeaponController (C#): activate, deactivate and update weapon placed
  │    │	│	├── RobotDamageController (C#): apply damage to the robot by parts, decide detach or destruction by part
  │    │	│	└── RobotInputController (C#): translate local playe input into movement or weapon commands
  │    │	├── Views/
- │    │	│	├── RobotView (Monobehaviour): represent robot root on the scene (root rigidbody, visual sockets references, parts root, visual/debug helper)
- │    │	│	├── RobotPartView (Monobehaviour): represent a specific part placed (reproduce damage, visual detach, report collisions)
- │    │	│	├── RobotSocketView (Monobehaviour): represent physic/visual socket (expose socket transform, validate visual in build mode)
+ │    │	│	├── |RobotView (Monobehaviour): represent robot root on the scene (root rigidbody, visual sockets references, parts root, visual/debug helper)
+ │    │	│	├── |RobotPartView (Monobehaviour): represent a specific part placed (reproduce damage, visual detach, report collisions)
+ │    │	│	├── |RobotSocketView (Monobehaviour): represent physic/visual socket (expose socket transform, validate visual in build mode)
  │    │	│	├── WeaponView (Monobehaviour): represent a specific weapon placed (spinner, hammer with animation)
  │    │	│	└── RobotDebugView (Monobehaviour): show mass center, sockets, names, for development
  │    │	├── Factories/
  │    │	│	├── RobotFactory (C#): create complete robot from data
- │    │	│	├── RobotPartFactory (C#): create parts and its associate views
+ │    │	│	├── |RobotPartFactory (C#): create parts and its associate views
  │    │	│	└── RobotSpawnFactory (C#): spawn robots on the arena
  │    │	├── Data/
- │    │	│	├── PartDefinitionAsset (ScriptableObject): base configuration of a part from SO (name, type, mass, max hp, prefab, icon, socket restriction, special data)
+ │    │	│	├── |PartDefinitionAsset (ScriptableObject): base configuration of a part from SO (name, type, mass, max hp, prefab, icon, socket restriction, special data)
  │    │	│	├── WeaponDefinitionAsset (ScriptableObject): base data of weapons (weapon type, base damage, torque, max vel, power use)
  │    │	│	├── *RobotDefinitionAsset (ScriptableObject): preset of complete robots
- │    │	│	├── PartCategoty (Enum): chasis, wheel, armor, weapon, support
- │    │	│	└── SocketType (Enum): wheel, armor, weapon, support
+ │    │	│	├── |PartCategoty (Enum): chasis, wheel, armor, weapon, support
+ │    │	│	└── |SocketType (Enum): wheel, armor, weapon, support
  │    │	└── Systems/
- │    │		├── RobotStatsCalculator (C#): recalculate stats added from parts
+ │    │		├── |RobotStatsCalculator (C#): recalculate stats added from parts
  │    │		├── RobotAssemblyValidator (C#): validate that assembled robot are coherent
  │    │		├── RobotCenterOfMassCalculator (C#): calculate logic center of mass
  │    │		└── *RobotPowerSystem (C#): managing power usage or production

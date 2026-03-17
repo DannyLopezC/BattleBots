@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c005394e8c7447a44acfb32eac5d7c41, type: 3}
+  m_Name: Chassis
+  m_EditorClassIdentifier: Assembly-CSharp::BattleBots.Robot.PartDefinitionAsset
+  partName: Chassis
+  partType: 0
+  mass: 15
+  maxHp: 100
+  prefab: {fileID: 5750747711311045080, guid: 4cfc0a5b9cdc24b45bf206da819c8e42, type: 3}
+  icon: {fileID: -1576778703, guid: e6030234a402d9d419611604236ea08c, type: 3}
+  socketTypeAllowed: 0
+  drivePower: 0
+  weaponPower: 0
