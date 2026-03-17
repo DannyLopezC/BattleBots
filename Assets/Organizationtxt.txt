@@ -1,0 +1,246 @@
+Model = state and rules
+View = Unity events and representation
+Controller = coordination
+
+Project vision:
+1. Build mode: where you build the robot
+2. Battle mode: test movement, weapons, damage and combat
+3. Shared robot domain: everything that defines a robot, parts, and how stats are calculated
+
+Phase 1:
+Checklist:
+- basic chasis
+- defined sockets
+- two functional wheels
+- a simple weapon part
+- an assemblable robot
+- recalculate basic stats
+
+Goal: project structure, robot domain, basic buld flow, MVC conexion, a simple modular robot existing
+
+Phase 2:
+Checklist:
+- select part from UI
+- visual preview
+- validate if part can be placed
+- place/remove parts
+- recalculate stats
+- update stats panel
+
+Goal: to be able to build without touching code for each part
+
+Phase 3:
+Checklist:
+- basic wheeled locomotion
+- turn
+- player input
+- reasonable center of mass
+- minimum stability
+
+Goal: to move the built robot
+
+Phase 4:
+Checklist:
+- simple spinner
+- activation/deactivation
+- visible collision
+- basic visual feedback
+
+Goal: robot doing something "battlebots"
+
+Phase 5:
+Checklist:
+- very simple dummy enemy or bot
+- localized damage per piece
+- a piece can break or come loose
+- damage feedback
+
+Goal: first real combat
+
+Phase 6:
+Checklist:
+- spawn player vs enemy
+- restart
+- simple win condition
+- minimum HUD
+
+
+* is for later implementations if needed
+
+Assets/Project/
+ ├── Art/
+ ├── Audio/
+ ├── Materials/
+ ├── Prefabs/
+ │    ├── Robot/
+ │    ├── Parts/
+ │    ├── UI/
+ │    └── Environment/
+ │
+ ├── Scenes/
+ │    ├── Bootstrap: Start scene where I load shared systems and other scenes
+ │    ├── Garage: Builduing scene, build room, robot on a platform, pieces inventory, stats panel
+ │    ├── Arena: Combat scene, arena, player, dummy or enemy, combat HUD
+ │    └── Sandbox: for fast tests, development only, test weapons, detach and verify physics
+ │
+ ├── ScriptableObjects/
+ │    ├── Parts/
+ │    ├── Weapons/
+ │    ├── Balance/
+ │    └── UI/
+ │
+ ├── Scripts/
+ │    ├── Core/
+ │    │	├── Events/
+ │    │	│	└── GameEventBus (C#): to publish and listen to events (part placed, part removed, part damaged... etc.)
+ │    │	├── Interfaces/
+ │    │	│	├── IInitializable (Interface): allow consistent init of controllers/services
+ │    │	│	├── ITickable (Interface): for systems that required manual update from bootstrap
+ │    │	│	├── IDisposableGameService (Interface): release subscriptions/events if a services that live by scene
+ │    │	│	├── ICommand (Interface): base for actions like place/remove
+ │    │	│	├── IView (Interface): base interface for views
+ │    │	│	└── IController (Interface): base interface for controllers
+ │    │	├── Services/
+ │    │	│	├── IdGeneratorService (C#): generate ids for parts and robots
+ │    │	│	├── *GameTimeService (C#): if decoupled timers are needed later on 
+ │    │	│	└── *RandomService (C#): centralized randomization if doing AI or reproducible variations
+ │    │	├── Utilities/
+ │    │	│	├── MathUtility (static C#): common math helpers
+ │    │	│	├── TransformUtility (static C#): position/aligment utilities if generics
+ │    │	│	├── DebugDrawUtility (static C#): gizmos and helpers to debug
+ │    │	└── Data/
+ │    │		├── SocketId (struct): represent robot socket
+ │    │		├── PartInstanceId (struct): represent robot part
+ │    │		├── DamageContext (struct): pack up hit data (attacker, target, contact point, force, weapon type)
+ │    │		├── PlacementValidationResult (struct): returns if a piece can be placed, if not why
+ │    │		└── RobotSpawnData (C#): minimum data to instantiate the robot on the arena
+ │    ├── Robot/
+ │    │	├── Models/
+ │    │	│	├── RobotModel (C#): represent complete robot state (id, parts, stats, destroyed or active)
+ │    │	│	├── RobotPartModel (C#): represent a placed part (id, type, hp, socket, destroyed or detached)
+ │    │	│	├── RobotStatsModel (C#): represent added stat to the robot (mass, hp, momement power, energy use, weapon power)
+ │    │	│	├── SocketModel (C#): represent robot logic socket (id, type allowed, occupation, orientation)
+ │    │	│	└── WeaponStateModel (C#): runtime state of weapon (active?, rpm if spinner, cooldwon, power use)
+ │    │	├── Controllers/
+ │    │	│	├── RobotController (C#): main controller of a robot (connect model and view, answer to changes, ask for stats calculation, delegate locomotio/weapon/damage  to smaller systems)
+ │    │	│	├── RobotLocomotionController (C#): translate input to robot movement (robot stats, physic view, wheels/engines availables)
+ │    │	│	├── RobotWeaponController (C#): activate, deactivate and update weapon placed
+ │    │	│	├── RobotDamageController (C#): apply damage to the robot by parts, decide detach or destruction by part
+ │    │	│	└── RobotInputController (C#): translate local playe input into movement or weapon commands
+ │    │	├── Views/
+ │    │	│	├── RobotView (Monobehaviour): represent robot root on the scene (root rigidbody, visual sockets references, parts root, visual/debug helper)
+ │    │	│	├── RobotPartView (Monobehaviour): represent a specific part placed (reproduce damage, visual detach, report collisions)
+ │    │	│	├── RobotSocketView (Monobehaviour): represent physic/visual socket (expose socket transform, validate visual in build mode)
+ │    │	│	├── WeaponView (Monobehaviour): represent a specific weapon placed (spinner, hammer with animation)
+ │    │	│	└── RobotDebugView (Monobehaviour): show mass center, sockets, names, for development
+ │    │	├── Factories/
+ │    │	│	├── RobotFactory (C#): create complete robot from data
+ │    │	│	├── RobotPartFactory (C#): create parts and its associate views
+ │    │	│	└── RobotSpawnFactory (C#): spawn robots on the arena
+ │    │	├── Data/
+ │    │	│	├── PartDefinitionAsset (ScriptableObject): base configuration of a part from SO (name, type, mass, max hp, prefab, icon, socket restriction, special data)
+ │    │	│	├── WeaponDefinitionAsset (ScriptableObject): base data of weapons (weapon type, base damage, torque, max vel, power use)
+ │    │	│	├── *RobotDefinitionAsset (ScriptableObject): preset of complete robots
+ │    │	│	├── PartCategoty (Enum): chasis, wheel, armor, weapon, support
+ │    │	│	└── SocketType (Enum): wheel, armor, weapon, support
+ │    │	└── Systems/
+ │    │		├── RobotStatsCalculator (C#): recalculate stats added from parts
+ │    │		├── RobotAssemblyValidator (C#): validate that assembled robot are coherent
+ │    │		├── RobotCenterOfMassCalculator (C#): calculate logic center of mass
+ │    │		└── *RobotPowerSystem (C#): managing power usage or production
+ │    ├── BuildMode/
+ │    │	├── Models/
+ │    │	│	├── BuildLayoutModel (C#): logic state of the building layout (sockets occupied, what part in each socket, what part is selected)
+ │    │	│	├── BuildSelectionModel (C#): what part of the catalog is selected
+ │    │	│	└── BuildPreviewModel (C#): current preview state (piece is trying to place, target socket, current rot, is valid placement)
+ │    │	├── Controllers/
+ │    │	│	├── BuildController (C#): main controller of the building mode (listen input, update preview, validate placement, execute place/remove, update robot and UI)
+ │    │	│	├── BuildInputController (C#): translate user input into building actions (select, place, remove, rotate)
+ │    │	│	├── BuildPreviewController (C#): control the visual preview with the logic state
+ │    │	│	└── PartCatalogController (C#): connect UI catalog with selection of the build mode
+ │    │	├── Views/
+ │    │	│	├── BuildPreviewView (Monobehaviour): show part ghost, green/red depending on validity, follo curren socket
+ │    │	│	├── *BuildGridView (Monobehaviour): if clear representation of the layout/socket in building mode wanted
+ │    │	│	├── SocketHighlighView (Monobehaviour): highlight valid sockets
+ │    │	│	└── GarageCameraView (Monobehaviour): camera/orbit on the building mode
+ │    │	├── Commands/
+ │    │	│	├── PlacePartCommand (C#): execute part placing
+ │    │	│	├── RemovePartCommand (C#): execute part removing
+ │    │	│	├── RotatePartCommand (C#): execute rotating part
+ │    │	│	└── *UndoCommand (C#): execute undo command
+ │    │	└── Services/
+ │    │		├── PartPlacementValidator (C#): decide if a part can be placed in certain socket
+ │    │		├── BuildSnapService (C#): get what socket is the user pointing (raycast)
+ │    │		└── BuildCatalogService (C#): expose available parts on the catalog (reading SO and give the info to the UI) 
+ │    ├── BattleMode/
+ │    │	├── Models/
+ │    │	│	├── BattleStateModel (C#): current state of the combat (preparing, active, over)
+ │    │	│	├── MathResultModel (C#): combat results (winner, duration, win reason)
+ │    │	│	└── *BotBrainStateModel (C#): simple runtime state of the AI
+ │    │	├── Controllers/
+ │    │	│	├── BattleController (C#): main controller of the combat (start combat, register participants, process impacts, apply rules, ask for updates to UI, close the match)
+ │    │	│	├── PlayerBattleController (C#): player input during combat
+ │    │	│	├── BotBattleController (C#): controller of the enemy bot using AI
+ │    │	│	├── WeaponCollisionController (C#): receive collision events from weapons and send them to BattleController or DamageResolver
+ │    │	│	└── ArenaController (C#): control elements in the arena (limits, hazards*, match restart)
+ │    │	├── Views/
+ │    │	│	├── ArenaView (Monobehaviour): visual references from the arena
+ │    │	│	├── BattleHudView (Monobehaviour): show hp, part state, math messages
+ │    │	│	├── BattleCameraView (Monobehaviour): combat camera
+ │    │	│	└── *ImpactVfxView (Monobehaviour): sparks, smoke, visual feedback of impact
+ │    │	├── Rules/
+ │    │	│	├── DamageResolver (C#): calculate how much damage makes an impact (relative vel, mass, weapon type, multipliers)
+ │    │	│	├── DetachResolver (C#): decide if a part detach or is just damaged
+ │    │	│	├── BattleVictoryResolver (C#): decides if a robot losses (withous movement-chasis, total destruction, timeout*)
+ │    │	│	└── ImpactClassifier (C#): clasify impacts (normal, spinner, little touch, irrelevant collision) avoids false damage
+ │    │	└── Services/
+ │    │		├── BattleFlowService (C#): start secuence, running and combat end
+ │    │		├── BotAIService (C#): basic AI logic for the enemy
+ │    │		├── ArenaSpawnService (C#): spawn robots on valid positions
+ │    │		└── *BattleCameraService (C#): dynamic combat camera
+ │    ├── UI/
+ │    │	├── Views/
+ │    │	│	├── PartCatalogView (Monobehaviour): buttons of available parts
+ │    │	│	├── RobotStatsPanelView (Monobehaviour): show added stats to the robot
+ │    │	│	├── PartDetailsPanelView (Monobehaviour): show selected part details
+ │    │	│	├── BuildToolBarView (Monobehaviour): rotate, remote, test, battle buttons
+ │    │	│	└── *MainMenuView (Monobehaviour): basic main menu
+ │    │	├── Controllers/
+ │    │	│	├── PartCatalogUIController (C#): connect visual catalog with actual selection of the build mode
+ │    │	│	├── RobotStatsUIController (C#): listen stats changes and update the panel
+ │    │	│	├── BuildToolBarController (C#): connect build buttons with buildcontroller
+ │    │	│	├── *ScreenFlowController (C#): for multiple screen or changes between garag/arena/UI overlays
+ │    │	│	└── *MainMenuView (C#): basic main menu
+ │    │	├── Widgets/
+ │    │	│	├── PartButtonWidget (Monobehaviour): individual part button
+ │    │	│	├── StatRowWidget (Monobehaviour): stat row with label->valor
+ │    │	│	└── HealthBarWidget (Monobehaviour): reusable bar
+ │    │	└── Data/
+ │    │		└── PartUiData (ScriptableObject): icon, cool name, color by category
+ │    ├── Physics/
+ │    │	├── Services/
+ │    │	│	├── FoceApplicationService (C#): helpers to apply force/torques consistently
+ │    │	│	├── CenterOfMassService (C#): apply/adjust center of mass to the rigidbody root following the robot assembly
+ │    │	│	├── *JointSetupService (C#): if using specific joints for certain parts
+ │    │	│	└── CollisionAnalysisService (C#): convert Unity collission in useful data for the combat
+ │    │	├── Debug/
+ │    │	│	├── CenterOfMassDebugDrawer (Monobehaviour): draw center of mass
+ │    │	│	├── ForceDebugDrawer (Monobehaviour): draw forces and impact directions
+ │    │	│	└── CollisionDebugDrawer (Monobehaviour): draw impact points and normals
+ │    │	└── Helpers/
+ │    │		├── RigidbodyUtility (static C#): little utilities related to the RB
+ │    │		└── CollisionUtility (static C#): extract useful info from collision
+ │    └── Bootstrap/
+ │    	├── Installers/
+ │    	│	├── GarageInstaller (Monobehaviour): build and connect all systems needed for Garage (create services, create controllers, connect UI with build mode, init build robot)
+ │    	│	├── ArenaInstalle (Monobehaviour): build and connect all systems needed for Arena (spawn robots, init battle systems, connect HUD)
+ │    	│	└── *ProjectInstaller (Monobehaviour): global services between scenes
+ │    	├── SceneReferences/
+ │    	│	├── GarageSceneReferences (Monobehaviour): expose all references needed for Garage (robot root, camera, paneles, anchorage point)
+ │    	│	└── ArenaSceneReferences (Monobehaviour): expose all references needed for arena (spawn points, HUD, arena view, cameras) 
+ │    	└── Coordinator/
+ │    		├── GameModeCoordinator (Monobehaviour posible c#): manage entry and exit of modes or scenes
+ │    		├── *SceneLoadCoordinator (Monobehaviour): if managing scene loads with persisting data
+ │    		└── ProjectBootstrapper (Monobehaviour): Entry point of initialization
+ │
+ └── Tests/
