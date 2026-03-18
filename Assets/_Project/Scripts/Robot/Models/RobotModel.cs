@@ -15,8 +15,9 @@ namespace BattleBots.Robot
         
         public float BaseMass { get; private set; }
         public float BaseHP { get; private set; }
+        public float BaseAvailableEnergy { get; private set; }
 
-        public RobotModel(List<SocketModel> sockets, float baseMass, float baseHP)
+        public RobotModel(List<SocketModel> sockets, float baseMass, float baseHP, float baseAvailableEnergy)
         {
             this.sockets = sockets;
             parts = new List<RobotPartModel>();
@@ -24,6 +25,7 @@ namespace BattleBots.Robot
 
             BaseMass = baseMass;
             BaseHP = baseHP;
+            BaseAvailableEnergy = baseAvailableEnergy;
         }
         public void SetStats(RobotStatsModel stats)
         {

@@ -81,6 +81,9 @@ namespace BattleBots.Bootstrap
             Register<IBuildPreviewController>(() =>
                 sceneReferences.BuildPreviewView.GetController);
 
+            Register<IRobotStatsUIController>(() =>
+                sceneReferences.RobotStatsPanelView.GetController);
+
         }
     }
 }

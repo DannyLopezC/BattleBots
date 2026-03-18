@@ -21,3 +21,4 @@ MonoBehaviour:
   socketTypeAllowed: 3
   drivePower: 0
   weaponPower: 15
+  energyUse: 30

@@ -14,5 +14,6 @@ namespace BattleBots.Robot
         [SerializeField] public SocketType socketTypeAllowed;
         [SerializeField] public float drivePower;
         [SerializeField] public float weaponPower;
+        [SerializeField] public float energyUse;
     }
 }

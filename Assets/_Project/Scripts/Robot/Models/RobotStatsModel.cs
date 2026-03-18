@@ -6,5 +6,7 @@ namespace BattleBots.Robot
         public float totalHP;
         public float drivePower;
         public float weaponPower;
+        public float energyAvailable;
+        public float energyUse;
     }
 }

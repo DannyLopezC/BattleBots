@@ -10,6 +10,7 @@ namespace BattleBots.Robot
 
             stats.totalMass = robot.BaseMass;
             stats.totalHP = robot.BaseHP;
+            stats.energyAvailable = robot.BaseAvailableEnergy;
 
             foreach(RobotPartModel part in robot.parts)
             {
@@ -17,6 +18,7 @@ namespace BattleBots.Robot
 
                 stats.totalMass += part.definition.mass;
                 stats.totalHP += part.currentHp;
+                stats.energyUse += part.definition.energyUse;
 
                 switch (part.definition.partType)
                 {

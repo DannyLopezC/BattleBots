@@ -1,5 +1,6 @@
 using BattleBots.Bootstrap;
 using BattleBots.Robot;
+using BattleBots.UI;
 using UnityEngine;
 
 namespace BattleBots.BuildMode
@@ -13,7 +14,7 @@ namespace BattleBots.BuildMode
         IBuildController GetController { get; }
     }
 
-    [DefaultExecutionOrder(-80)]
+    [DefaultExecutionOrder(-70)]
     public class BuildView : MonoBehaviourView, IBuildView
     {
         private IBuildController controller;
@@ -60,7 +61,8 @@ namespace BattleBots.BuildMode
                 installer.Get<BuildSnapService>(),
                 installer.Get<PartPlacementValidator>(),
                 installer.Get<IBuildPreviewController>(),
-                installer.Get<IRobotView>()
+                installer.Get<IRobotView>(),
+                installer.Get<IRobotStatsUIController>()
                 );
         }
 

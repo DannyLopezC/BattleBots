@@ -1,5 +1,6 @@
 using BattleBots.Core;
 using BattleBots.Robot;
+using BattleBots.UI;
 using UnityEngine;
 
 namespace BattleBots.BuildMode
@@ -20,7 +21,7 @@ namespace BattleBots.BuildMode
         private readonly PartPlacementValidator partPlacementValidator;
         private readonly IBuildPreviewController previewController;
         private readonly IRobotView robotView;
-        
+        private readonly IRobotStatsUIController statsUIController;
 
         public BuildController(IBuildView view,
             BuildSelectionModel selectionModel,
@@ -28,7 +29,8 @@ namespace BattleBots.BuildMode
             BuildSnapService snapService,
             PartPlacementValidator partPlacementValidator,
             IBuildPreviewController buildPreviewController,
-            IRobotView robotView) : base(view)
+            IRobotView robotView,
+            IRobotStatsUIController statsUIController) : base(view)
         {
             this.view = view;
 
@@ -38,6 +40,7 @@ namespace BattleBots.BuildMode
             this.partPlacementValidator = partPlacementValidator;
             this.previewController = buildPreviewController;
             this.robotView = robotView;
+            this.statsUIController = statsUIController;
         }
 
         public override void OnUpdate()
@@ -126,6 +129,7 @@ namespace BattleBots.BuildMode
 
             previewModel.Clear();
             previewController.Hide();
+            statsUIController.Refresh();
         }
 
         private void TryRemovePart()
@@ -140,6 +144,7 @@ namespace BattleBots.BuildMode
 
             previewModel.Clear();
             previewController.Hide();
+            statsUIController.Refresh();
         }
 
         public void ClearSelection()

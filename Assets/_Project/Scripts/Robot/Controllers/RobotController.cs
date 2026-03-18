@@ -9,6 +9,7 @@ namespace BattleBots.Robot
         bool PlacePart(PartDefinitionAsset definition, string socketId);
         bool RemovePart(string socketId);
         SocketModel GetSocket(string socketId);
+        RobotStatsModel GetStats();
 
         void Move(float moveInput, float turnInput);
     }
@@ -31,7 +32,7 @@ namespace BattleBots.Robot
                 sockets.Add(new SocketModel(socketView.SocketId, socketView.Type));
             }
 
-            model = new RobotModel(sockets, 15f, 100f);
+            model = new RobotModel(sockets, 15f, 100f, 100f);
             RecalculateStats();
         }
 
@@ -93,7 +94,6 @@ namespace BattleBots.Robot
         private void RecalculateStats()
         {
             model.SetStats(statsCalculator.calculate(model));
-            Debug.Log($"mass: {model.stats.totalMass} | hp: {model.stats.totalHP}");
         }
 
         public bool RemovePart(string socketId)
@@ -149,6 +149,11 @@ namespace BattleBots.Robot
         public SocketModel GetSocket(string socketId)
         {
             return model.sockets.Find(s => s.id == socketId);
+        }
+
+        public RobotStatsModel GetStats()
+        {
+            return model.stats;
         }
     }
 }

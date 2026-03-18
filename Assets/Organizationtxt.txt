@@ -25,7 +25,7 @@ x visual preview
 x validate if part can be placed
 x place/remove parts
 x recalculate stats
-- update stats panel
+x update stats panel
 
 Goal: to be able to build without touching code for each part
 
@@ -209,7 +209,7 @@ Assets/Project/
  │    │	│	└── *MainMenuView (Monobehaviour): basic main menu
  │    │	├── Controllers/
  │    │	│	├── |PartCatalogUIController (C#): connect visual catalog with actual selection of the build mode
- │    │	│	├── RobotStatsUIController (C#): listen stats changes and update the panel
+ │    │	│	├── |RobotStatsUIController (C#): listen stats changes and update the panel
  │    │	│	├── BuildToolBarController (C#): connect build buttons with buildcontroller
  │    │	│	├── *ScreenFlowController (C#): for multiple screen or changes between garag/arena/UI overlays
  │    │	│	└── *MainMenuView (C#): basic main menu
@@ -234,8 +234,8 @@ Assets/Project/
  │    │		└── CollisionUtility (static C#): extract useful info from collision
  │    └── Bootstrap/
  │    	├── Installers/
- │    	│	├── |GarageInstaller (Monobehaviour): build and connect all systems needed for Garage (create services, create controllers, connect UI with build mode, init build robot)
- │    	│	├── ArenaInstalle (Monobehaviour): build and connect all systems needed for Arena (spawn robots, init battle systems, connect HUD)
+ │    	│	├── |GarageInstaller (Monobehaviour): build and connect all systems needed for Garage (create services, connect UI with build mode, init build robot)
+ │    	│	├── ArenaInstaller (Monobehaviour): build and connect all systems needed for Arena (spawn robots, init battle systems, connect HUD)
  │    	│	└── *ProjectInstaller (Monobehaviour): global services between scenes
  │    	├── SceneReferences/
  │    	│	├── |GarageSceneReferences (Monobehaviour): expose all references needed for Garage (robot root, camera, paneles, anchorage point)
