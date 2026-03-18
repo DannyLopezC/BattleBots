@@ -21,10 +21,10 @@ Goal: project structure, robot domain, basic buld flow, MVC conexion, a simple m
 Phase 2:
 Checklist:
 - select part from UI
-- visual preview
-- validate if part can be placed
-- place/remove parts
-- recalculate stats
+x visual preview
+x validate if part can be placed
+x place/remove parts
+x recalculate stats
 - update stats panel
 
 Goal: to be able to build without touching code for each part
@@ -113,7 +113,7 @@ Assets/Project/
  │    │		├── SocketId (struct): represent robot socket
  │    │		├── PartInstanceId (struct): represent robot part
  │    │		├── DamageContext (struct): pack up hit data (attacker, target, contact point, force, weapon type)
- │    │		├── PlacementValidationResult (struct): returns if a piece can be placed, if not why
+ │    │		├── |PlacementValidationResult (struct): returns if a piece can be placed, if not why
  │    │		└── RobotSpawnData (C#): minimum data to instantiate the robot on the arena
  │    ├── Robot/
  │    │	├── Models/
@@ -152,8 +152,8 @@ Assets/Project/
  │    ├── BuildMode/
  │    │	├── Models/
  │    │	│	├── BuildLayoutModel (C#): logic state of the building layout (sockets occupied, what part in each socket, what part is selected)
- │    │	│	├── BuildSelectionModel (C#): what part of the catalog is selected
- │    │	│	└── BuildPreviewModel (C#): current preview state (piece is trying to place, target socket, current rot, is valid placement)
+ │    │	│	├── |BuildSelectionModel (C#): what part of the catalog is selected
+ │    │	│	└── |BuildPreviewModel (C#): current preview state (piece is trying to place, target socket, current rot, is valid placement)
  │    │	├── Controllers/
  │    │	│	├── |BuildController (C#): main controller of the building mode (listen input, update preview, validate placement, execute place/remove, update robot and UI)
  │    │	│	├── BuildInputController (C#): translate user input into building actions (select, place, remove, rotate)
@@ -171,9 +171,9 @@ Assets/Project/
  │    │	│	├── RotatePartCommand (C#): execute rotating part
  │    │	│	└── *UndoCommand (C#): execute undo command
  │    │	└── Services/
- │    │		├── PartPlacementValidator (C#): decide if a part can be placed in certain socket
- │    │		├── BuildSnapService (C#): get what socket is the user pointing (raycast)
- │    │		└── BuildCatalogService (C#): expose available parts on the catalog (reading SO and give the info to the UI) 
+ │    │		├── |PartPlacementValidator (C#): decide if a part can be placed in certain socket
+ │    │		├── |BuildSnapService (C#): get what socket is the user pointing (raycast)
+ │    │		└── |BuildCatalogService (C#): expose available parts on the catalog (reading SO and give the info to the UI) 
  │    ├── BattleMode/
  │    │	├── Models/
  │    │	│	├── BattleStateModel (C#): current state of the combat (preparing, active, over)
@@ -214,7 +214,7 @@ Assets/Project/
  │    │	│	├── *ScreenFlowController (C#): for multiple screen or changes between garag/arena/UI overlays
  │    │	│	└── *MainMenuView (C#): basic main menu
  │    │	├── Widgets/
- │    │	│	├── PartButtonWidget (Monobehaviour): individual part button
+ │    │	│	├── |PartButtonWidget (Monobehaviour): individual part button
  │    │	│	├── StatRowWidget (Monobehaviour): stat row with label->valor
  │    │	│	└── HealthBarWidget (Monobehaviour): reusable bar
  │    │	└── Data/

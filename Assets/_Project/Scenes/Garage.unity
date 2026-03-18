@@ -826,8 +826,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2882c688a41d59744bd0d19f7c70df33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleBots.BuildMode.BuildPreviewView
-  validPreviewMaterial: {fileID: 0}
-  invalidPreviewMaterial: {fileID: 0}
+  validPreviewMaterial: {fileID: 2100000, guid: 1aa8e208bd24185428742832de9b2c08, type: 2}
+  invalidPreviewMaterial: {fileID: 2100000, guid: a091499086c73ab429135ee86af985e7, type: 2}
 --- !u!114 &1561899436 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4032417363090157743, guid: 4cfc0a5b9cdc24b45bf206da819c8e42, type: 3}
