@@ -1,23 +1,25 @@
+using BattleBots.Bootstrap;
 using BattleBots.Robot;
 using UnityEngine;
 
 namespace BattleBots.BuildMode
 {
-
     public interface IBuildView: IMonoBehaviourView
     {
         PartDefinitionAsset SelectedPart { get; set; }
         PartDefinitionAsset WheelDefinition { get; }
         PartDefinitionAsset SpinnerDefinition{ get; }
         Camera MainCamera { get; }
+        IBuildController GetController { get; }
     }
 
+    [DefaultExecutionOrder(-80)]
     public class BuildView : MonoBehaviourView, IBuildView
     {
         private IBuildController controller;
+        public IBuildController GetController => controller;
 
         [SerializeField] private Camera mainCamera;
-        [SerializeField] private RobotView robotView;
         [SerializeField] private BuildPreviewView buildPreviewView;
         [SerializeField] private LayerMask socketLayerMask;
 
@@ -37,8 +39,6 @@ namespace BattleBots.BuildMode
 
         public Camera MainCamera => mainCamera;
 
-        public IRobotView RobotView => robotView;
-
         protected override IMonoBehaviourController Controller()
         {
             return controller;
@@ -46,21 +46,22 @@ namespace BattleBots.BuildMode
 
         protected override void CreateController()
         {
-            BuildSelectionModel selectionModel = new BuildSelectionModel();
-            BuildPreviewModel previewModel = new BuildPreviewModel();
+            GarageInstaller installer = FindFirstObjectByType<GarageInstaller>();
 
-            BuildSnapService snapService = new BuildSnapService(mainCamera, socketLayerMask, 100.0f);
-            PartPlacementValidator partPlacementValidator = new PartPlacementValidator();
-
-            IBuildPreviewController buildPreviewController = buildPreviewView.GetController;
-
-            if (buildPreviewController == null)
+            if (installer == null)
             {
-                Debug.LogError("BuildPreviewController is null. BuildPreviewView may not be initialized yet.");
-                return;
+                Debug.LogWarning($"Installer not found");
             }
 
-            controller = new BuildController(this, selectionModel, previewModel, snapService, partPlacementValidator, buildPreviewController, robotView);
+            controller = new BuildController(
+                this,
+                installer.Get<BuildSelectionModel>(),
+                installer.Get<BuildPreviewModel>(),
+                installer.Get<BuildSnapService>(),
+                installer.Get<PartPlacementValidator>(),
+                installer.Get<IBuildPreviewController>(),
+                installer.Get<IRobotView>()
+                );
         }
 
         protected override void Start()

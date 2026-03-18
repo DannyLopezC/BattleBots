@@ -14,7 +14,6 @@ namespace BattleBots.Robot
         bool PlacePart(PartDefinitionAsset definition, string socketId);
         bool RemovePart(string socketId);
         SocketModel GetSocket(string socketId);
-        void RecalculateStats();
         
         float MoveForceMultiplier { get; }
         float TurnTorqueMultiplier { get; }
@@ -87,11 +86,6 @@ namespace BattleBots.Robot
         public SocketModel GetSocket(string socketId)
         {
             return controller.GetSocket(socketId);
-        }
-
-        public void RecalculateStats()
-        {
-            controller.RecalculateStats();
         }
     } 
 }

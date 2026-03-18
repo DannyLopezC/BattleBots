@@ -12,6 +12,7 @@ namespace BattleBots.BuildMode
         IBuildPreviewController GetController { get; }
     }
 
+    [DefaultExecutionOrder(-90)]
     public class BuildPreviewView : MonoBehaviourView, IBuildPreviewView
     {
         private IBuildPreviewController controller;

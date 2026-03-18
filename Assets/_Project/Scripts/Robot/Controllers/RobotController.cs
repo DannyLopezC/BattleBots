@@ -8,7 +8,6 @@ namespace BattleBots.Robot
     {
         bool PlacePart(PartDefinitionAsset definition, string socketId);
         bool RemovePart(string socketId);
-        void RecalculateStats();
         SocketModel GetSocket(string socketId);
 
         void Move(float moveInput, float turnInput);
@@ -91,9 +90,10 @@ namespace BattleBots.Robot
             return true;
         }
 
-        public void RecalculateStats()
+        private void RecalculateStats()
         {
             model.SetStats(statsCalculator.calculate(model));
+            Debug.Log($"mass: {model.stats.totalMass} | hp: {model.stats.totalHP}");
         }
 
         public bool RemovePart(string socketId)

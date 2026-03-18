@@ -126,7 +126,6 @@ namespace BattleBots.BuildMode
 
             previewModel.Clear();
             previewController.Hide();
-            robotView.RecalculateStats();
         }
 
         private void TryRemovePart()
@@ -141,7 +140,6 @@ namespace BattleBots.BuildMode
 
             previewModel.Clear();
             previewController.Hide();
-            robotView.RecalculateStats();
         }
 
         public void ClearSelection()

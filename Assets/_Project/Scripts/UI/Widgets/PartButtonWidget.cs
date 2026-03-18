@@ -26,6 +26,14 @@ namespace BattleBots.UI
             }
         }
 
+        private void OnDestroy()
+        {
+            if (partButton != null)
+            {
+                partButton.onClick.RemoveListener(HandleClick);
+            }
+        }
+
         public void Bind(PartDefinitionAsset definition, Action<PartDefinitionAsset> onClicked)
         {
             this.definition = definition;
@@ -45,11 +53,13 @@ namespace BattleBots.UI
 
         private void HandleClick()
         {
-            if (definition != null)
+            if (definition == null)
             {
                 Debug.LogWarning($"PartButtonWidget clicked but no definition is bound");
                 return;
             }
+
+            onClicked?.Invoke(definition);
         }
 
         private void RefreshVisuals()
@@ -77,11 +87,6 @@ namespace BattleBots.UI
                 partIcon.sprite = definition.icon;
                 partIcon.enabled = definition.icon != null;
             }
-        }
-
-        public void OnClick()
-        {
-
         }
     }
 }

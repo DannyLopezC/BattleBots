@@ -20,7 +20,7 @@ Goal: project structure, robot domain, basic buld flow, MVC conexion, a simple m
 
 Phase 2:
 Checklist:
-- select part from UI
+x select part from UI
 x visual preview
 x validate if part can be placed
 x place/remove parts
@@ -202,13 +202,13 @@ Assets/Project/
  │    │		└── *BattleCameraService (C#): dynamic combat camera
  │    ├── UI/
  │    │	├── Views/
- │    │	│	├── PartCatalogView (Monobehaviour): buttons of available parts
+ │    │	│	├── |PartCatalogView (Monobehaviour): buttons of available parts
  │    │	│	├── RobotStatsPanelView (Monobehaviour): show added stats to the robot
  │    │	│	├── PartDetailsPanelView (Monobehaviour): show selected part details
  │    │	│	├── BuildToolBarView (Monobehaviour): rotate, remote, test, battle buttons
  │    │	│	└── *MainMenuView (Monobehaviour): basic main menu
  │    │	├── Controllers/
- │    │	│	├── PartCatalogUIController (C#): connect visual catalog with actual selection of the build mode
+ │    │	│	├── |PartCatalogUIController (C#): connect visual catalog with actual selection of the build mode
  │    │	│	├── RobotStatsUIController (C#): listen stats changes and update the panel
  │    │	│	├── BuildToolBarController (C#): connect build buttons with buildcontroller
  │    │	│	├── *ScreenFlowController (C#): for multiple screen or changes between garag/arena/UI overlays
@@ -234,11 +234,11 @@ Assets/Project/
  │    │		└── CollisionUtility (static C#): extract useful info from collision
  │    └── Bootstrap/
  │    	├── Installers/
- │    	│	├── GarageInstaller (Monobehaviour): build and connect all systems needed for Garage (create services, create controllers, connect UI with build mode, init build robot)
+ │    	│	├── |GarageInstaller (Monobehaviour): build and connect all systems needed for Garage (create services, create controllers, connect UI with build mode, init build robot)
  │    	│	├── ArenaInstalle (Monobehaviour): build and connect all systems needed for Arena (spawn robots, init battle systems, connect HUD)
  │    	│	└── *ProjectInstaller (Monobehaviour): global services between scenes
  │    	├── SceneReferences/
- │    	│	├── GarageSceneReferences (Monobehaviour): expose all references needed for Garage (robot root, camera, paneles, anchorage point)
+ │    	│	├── |GarageSceneReferences (Monobehaviour): expose all references needed for Garage (robot root, camera, paneles, anchorage point)
  │    	│	└── ArenaSceneReferences (Monobehaviour): expose all references needed for arena (spawn points, HUD, arena view, cameras) 
  │    	└── Coordinator/
  │    		├── GameModeCoordinator (Monobehaviour posible c#): manage entry and exit of modes or scenes
