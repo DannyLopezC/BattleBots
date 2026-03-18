@@ -9,6 +9,7 @@ namespace BattleBots.Robot
         bool PlacePart(PartDefinitionAsset definition, string socketId);
         bool RemovePart(string socketId);
         void RecalculateStats();
+        SocketModel GetSocket(string socketId);
 
         void Move(float moveInput, float turnInput);
     }
@@ -70,17 +71,7 @@ namespace BattleBots.Robot
             }
 
             GameObject instance = GameObject.Instantiate(definition.prefab, socketView.AttachPoint);
-            instance.transform.localPosition = Vector3.zero;
-
-            instance.transform.localRotation = Quaternion.identity;
-
-            if (socketId.Contains("Left"))
-            {
-                instance.transform.localRotation = Quaternion.Euler(0.0f, 90.0f, 0.0f);
-            } else if (socketId.Contains("Right"))
-            {
-                instance.transform.localRotation = Quaternion.Euler(0.0f, -90.0f, 0.0f);
-            }
+            instance.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
             RobotPartView partView = instance.GetComponent<RobotPartView>();
             if(partView == null)
@@ -103,7 +94,6 @@ namespace BattleBots.Robot
         public void RecalculateStats()
         {
             model.SetStats(statsCalculator.calculate(model));
-            Debug.Log($"Mass: {model.stats.totalMass}");
         }
 
         public bool RemovePart(string socketId)
@@ -154,6 +144,11 @@ namespace BattleBots.Robot
                 Vector3 limited = horizontalVelocity.normalized * maxSpeed;
                 view.RB.linearVelocity = new Vector3(limited.x, view.RB.linearVelocity.y, limited.z);
             }
+        }
+
+        public SocketModel GetSocket(string socketId)
+        {
+            return model.sockets.Find(s => s.id == socketId);
         }
     }
 }

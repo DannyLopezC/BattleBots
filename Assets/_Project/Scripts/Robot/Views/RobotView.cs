@@ -9,11 +9,12 @@ namespace BattleBots.Robot
     public interface IRobotView : IMonoBehaviourView
     {
         Rigidbody RB { get; }
-        Transform PartsRoot { get; }
         List<IRobotSocketView> SocketViews { get; }
         IRobotSocketView GetSocketViewInterface(string socketId);
         bool PlacePart(PartDefinitionAsset definition, string socketId);
         bool RemovePart(string socketId);
+        SocketModel GetSocket(string socketId);
+        void RecalculateStats();
         
         float MoveForceMultiplier { get; }
         float TurnTorqueMultiplier { get; }
@@ -30,9 +31,6 @@ namespace BattleBots.Robot
 
         private List<IRobotSocketView> socketViews = new();
         public List<IRobotSocketView> SocketViews => socketViews;
-
-        [SerializeField] private Transform partsRoot;
-        public Transform PartsRoot => partsRoot;
 
         public float MoveForceMultiplier => moveForceMultiplier;
 
@@ -84,6 +82,16 @@ namespace BattleBots.Robot
         public void Move(float moveInput, float turnInput)
         {
             controller.Move(moveInput, turnInput);
+        }
+
+        public SocketModel GetSocket(string socketId)
+        {
+            return controller.GetSocket(socketId);
+        }
+
+        public void RecalculateStats()
+        {
+            controller.RecalculateStats();
         }
     } 
 }

@@ -1,3 +1,4 @@
+using BattleBots.Core;
 using BattleBots.Robot;
 using UnityEngine;
 
@@ -5,84 +6,149 @@ namespace BattleBots.BuildMode
 {
     public interface IBuildController: IMonoBehaviourController
     {
-
+        void SelectPart(PartDefinitionAsset definition);
+        void ClearSelection();
     }
 
     public class BuildController : MonoBehaviourController, IBuildController
     {
         private readonly IBuildView view;
-        public BuildController(IBuildView view) : base(view)
+
+        private readonly BuildSelectionModel selectionModel;
+        private readonly BuildPreviewModel previewModel;
+        private readonly BuildSnapService snapService;
+        private readonly PartPlacementValidator partPlacementValidator;
+        private readonly IBuildPreviewController previewController;
+        private readonly IRobotView robotView;
+        
+
+        public BuildController(IBuildView view,
+            BuildSelectionModel selectionModel,
+            BuildPreviewModel previewModel,
+            BuildSnapService snapService,
+            PartPlacementValidator partPlacementValidator,
+            IBuildPreviewController buildPreviewController,
+            IRobotView robotView) : base(view)
         {
             this.view = view;
+
+            this.selectionModel = selectionModel;
+            this.previewModel = previewModel;
+            this.snapService = snapService;
+            this.partPlacementValidator = partPlacementValidator;
+            this.previewController = buildPreviewController;
+            this.robotView = robotView;
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
-            HandleSelection();
-            HandlePlacement();
-            HandleRemoval();
-            HandleMovement();
-        }
 
-        private void HandleSelection()
-        {
+            UpdatePreview();
+
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                view.SelectedPart = view.WheelDefinition;
-                Debug.Log($"Selected: Wheel");
+                SelectPart(view.WheelDefinition);
+                Debug.Log("Wheel selected");
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                view.SelectedPart = view.SpinnerDefinition;
-                Debug.Log($"Selected: Spinner");
+                SelectPart(view.SpinnerDefinition);
+                Debug.Log("Spinner selected");
             }
-        }
 
-        private void HandlePlacement()
-        {
-            if (!Input.GetMouseButtonDown(0)) return;
-            if (view.SelectedPart == null) return;
-            if (!TryGetClickedSocket(out IRobotSocketView socketView)) return;
-
-            bool success = view.RobotView.PlacePart(view.SelectedPart, socketView.SocketId);
-            Debug.Log(success
-                ? $"Placed {view.SelectedPart.partName} on {socketView.SocketId}"
-                : $"Failed to place {view.SelectedPart.partName} on {socketView.SocketId}");
-        }
-
-        private void HandleRemoval()
-        {
-            if (!Input.GetMouseButtonDown(1)) return;
-            if (!TryGetClickedSocket(out IRobotSocketView socketView)) return;
-
-            bool success = view.RobotView.RemovePart(socketView.SocketId);
-
-            Debug.Log(success
-                ? $"Removed part from {socketView.SocketId}"
-                : $"Failed to remove part from {socketView.SocketId}");
-        }
-
-        private bool TryGetClickedSocket(out IRobotSocketView socketView)
-        {
-            socketView = null;
-
-            Ray ray = view.MainCamera.ScreenPointToRay(Input.mousePosition);
-
-            if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, ~0, QueryTriggerInteraction.Collide))
+            if (Input.GetMouseButtonDown(0))
             {
-                return false;
+                TryPlacePart();
             }
 
-            RobotSocketView socket = hit.collider.GetComponentInParent<RobotSocketView>();
-            if (socket == null)
+            if (Input.GetMouseButtonDown(1))
             {
-                return false;
+                TryRemovePart();
             }
 
-            socketView = socket;
-            return true;
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ClearSelection();
+            }
+
+            HandleMovement();
+        }
+
+        public void SelectPart(PartDefinitionAsset definition)
+        {
+            selectionModel.SetSelectedPart(definition);
+        }
+
+        private void UpdatePreview()
+        {
+            if (!selectionModel.HasSelection)
+            {
+                previewModel.Clear();
+                previewController.Hide();
+                return;
+            }
+
+            if (!snapService.TryGetSocketUnderCursor(out IRobotSocketView socketView))
+            {
+                previewModel.Clear();
+                previewController.Hide();
+                return;
+            }
+            
+            SocketModel socketModel = robotView.GetSocket(socketView.SocketId);
+            if(socketModel == null)
+            {
+                previewModel.Clear();
+                previewController.Hide();
+                return;
+            }
+
+            PlacementValidationResult result = partPlacementValidator.Validate(selectionModel.SelectedPart, socketModel);
+
+            previewModel.SetPreview(selectionModel.SelectedPart, socketView, result.IsValid);
+            previewController.Show(previewModel);
+        }
+
+        private void TryPlacePart()
+        {
+            if (!previewModel.HasValidPreview)
+                return;
+
+            if(previewModel.SelectedPart == null || previewModel.TargetSocketView == null)
+                return;
+
+            bool placed = robotView.PlacePart(previewModel.SelectedPart, previewModel.TargetSocketView.SocketId);
+
+            if (!placed)
+                return;
+
+            previewModel.Clear();
+            previewController.Hide();
+            robotView.RecalculateStats();
+        }
+
+        private void TryRemovePart()
+        {
+            if (!snapService.TryGetSocketUnderCursor(out IRobotSocketView socket))
+                return;
+
+            bool removed = robotView.RemovePart(socket.SocketId);
+
+            if (!removed)
+                return;
+
+            previewModel.Clear();
+            previewController.Hide();
+            robotView.RecalculateStats();
+        }
+
+        public void ClearSelection()
+        {
+            selectionModel.Clear();
+            previewModel.Clear();
+            previewController.Hide();
         }
 
         private void HandleMovement()
@@ -95,7 +161,7 @@ namespace BattleBots.BuildMode
             if (Input.GetKey(KeyCode.A)) turnInput = -1f;
             if (Input.GetKey(KeyCode.D)) turnInput = 1f;
 
-            view.RobotView.Move(moveInput, turnInput);
+            robotView.Move(moveInput, turnInput);
         }
     }
 }

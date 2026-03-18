@@ -9,7 +9,6 @@ namespace BattleBots.BuildMode
         PartDefinitionAsset SelectedPart { get; set; }
         PartDefinitionAsset WheelDefinition { get; }
         PartDefinitionAsset SpinnerDefinition{ get; }
-        IRobotView RobotView { get; }
         Camera MainCamera { get; }
     }
 
@@ -19,12 +18,13 @@ namespace BattleBots.BuildMode
 
         [SerializeField] private Camera mainCamera;
         [SerializeField] private RobotView robotView;
+        [SerializeField] private BuildPreviewView buildPreviewView;
+        [SerializeField] private LayerMask socketLayerMask;
 
         [SerializeField] private PartDefinitionAsset wheelDefinition;
         [SerializeField] private PartDefinitionAsset spinnerDefinition;
 
         private PartDefinitionAsset selectedPart;
-        private IRobotController robotController;
 
         public PartDefinitionAsset SelectedPart { 
             get { return selectedPart; }
@@ -46,7 +46,21 @@ namespace BattleBots.BuildMode
 
         protected override void CreateController()
         {
-            controller = new BuildController(this);
+            BuildSelectionModel selectionModel = new BuildSelectionModel();
+            BuildPreviewModel previewModel = new BuildPreviewModel();
+
+            BuildSnapService snapService = new BuildSnapService(mainCamera, socketLayerMask, 100.0f);
+            PartPlacementValidator partPlacementValidator = new PartPlacementValidator();
+
+            IBuildPreviewController buildPreviewController = buildPreviewView.GetController;
+
+            if (buildPreviewController == null)
+            {
+                Debug.LogError("BuildPreviewController is null. BuildPreviewView may not be initialized yet.");
+                return;
+            }
+
+            controller = new BuildController(this, selectionModel, previewModel, snapService, partPlacementValidator, buildPreviewController, robotView);
         }
 
         protected override void Start()

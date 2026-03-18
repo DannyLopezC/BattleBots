@@ -470,30 +470,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2883442648719278016, guid: 4cfc0a5b9cdc24b45bf206da819c8e42, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2883442648719278016, guid: 4cfc0a5b9cdc24b45bf206da819c8e42, type: 3}
-      propertyPath: m_Constraints
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 2883442648719278016, guid: 4cfc0a5b9cdc24b45bf206da819c8e42, type: 3}
-      propertyPath: m_LinearDamping
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2883442648719278016, guid: 4cfc0a5b9cdc24b45bf206da819c8e42, type: 3}
-      propertyPath: m_AngularDamping
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4032417363090157743, guid: 4cfc0a5b9cdc24b45bf206da819c8e42, type: 3}
-      propertyPath: moveForceMultiplier
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4032417363090157743, guid: 4cfc0a5b9cdc24b45bf206da819c8e42, type: 3}
-      propertyPath: turnTorqueMultiplier
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5750747711311045080, guid: 4cfc0a5b9cdc24b45bf206da819c8e42, type: 3}
       propertyPath: m_Name
       value: basic_chasis
@@ -806,6 +782,52 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1406163503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1406163504}
+  - component: {fileID: 1406163505}
+  m_Layer: 0
+  m_Name: BuildPreview
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1406163504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406163503}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1406163505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406163503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2882c688a41d59744bd0d19f7c70df33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleBots.BuildMode.BuildPreviewView
+  validPreviewMaterial: {fileID: 0}
+  invalidPreviewMaterial: {fileID: 0}
 --- !u!114 &1561899436 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4032417363090157743, guid: 4cfc0a5b9cdc24b45bf206da819c8e42, type: 3}
@@ -828,7 +850,7 @@ GameObject:
   - component: {fileID: 2100705570}
   - component: {fileID: 2100705569}
   m_Layer: 0
-  m_Name: BuildMode
+  m_Name: BuildView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -848,6 +870,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleBots.BuildMode.BuildView
   mainCamera: {fileID: 330585545}
   robotView: {fileID: 1561899436}
+  buildPreviewView: {fileID: 1406163505}
+  socketLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   wheelDefinition: {fileID: 11400000, guid: 612a302c0ef86394cbce6bc65b8779ef, type: 2}
   spinnerDefinition: {fileID: 11400000, guid: 2d2ec1467e15c86459fafc4dc6a8d37d, type: 2}
 --- !u!4 &2100705570
@@ -873,6 +899,7 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 2100705570}
+  - {fileID: 1406163504}
   - {fileID: 1297109120}
   - {fileID: 349784152}
   - {fileID: 952939561}

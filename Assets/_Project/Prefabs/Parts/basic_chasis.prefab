@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 1954003819911738871}
   - component: {fileID: 3309135096684394333}
   - component: {fileID: 3170466754168602428}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeftWheelSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,13 +139,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2882947539148956404}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -7.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4949246360430248570}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &3309135096684394333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 3151667559675038867}
   - component: {fileID: 5237356122360082630}
   - component: {fileID: 4112263945051442932}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightWheelSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -354,13 +354,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4486321145177779070}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 7.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4949246360430248570}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &5237356122360082630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -555,8 +555,8 @@ Rigidbody:
   m_GameObject: {fileID: 5750747711311045080}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -568,10 +568,10 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &4032417363090157743
 MonoBehaviour:
@@ -586,9 +586,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleBots.Robot.RobotView
   rb: {fileID: 2883442648719278016}
-  partsRoot: {fileID: 0}
-  moveForceMultiplier: 10
-  turnTorqueMultiplier: 5
+  moveForceMultiplier: 2
+  turnTorqueMultiplier: 2
 --- !u!1 &7072099463029115715
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,7 +599,7 @@ GameObject:
   - component: {fileID: 4895563017575854742}
   - component: {fileID: 2696584580130056286}
   - component: {fileID: 4202042272807917887}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WeaponSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,13 +614,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7072099463029115715}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 4.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4949246360430248570}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &2696584580130056286
 MonoBehaviour:
   m_ObjectHideFlags: 0
