@@ -190,6 +190,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 612a302c0ef86394cbce6bc65b8779ef, type: 2}
   - {fileID: 11400000, guid: 2d2ec1467e15c86459fafc4dc6a8d37d, type: 2}
   robotStatsPanelView: {fileID: 1832311746}
+  moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &129249851
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +227,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -0.0008544922}
+  m_AnchoredPosition: {x: 0, y: -0.0008544922}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &129249853

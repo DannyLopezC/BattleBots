@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace BattleBots.Robot
 {
@@ -10,8 +11,7 @@ namespace BattleBots.Robot
         bool RemovePart(string socketId);
         SocketModel GetSocket(string socketId);
         RobotStatsModel GetStats();
-
-        void Move(float moveInput, float turnInput);
+        RobotModel GetModel();
     }
 
     public class RobotController : MonoBehaviourController, IRobotController
@@ -20,7 +20,10 @@ namespace BattleBots.Robot
         private readonly RobotModel model;
         private readonly RobotStatsCalculator statsCalculator;
 
-        public RobotController(IRobotView view) : base(view)
+        private readonly IRobotLocomotionController locomotionController;
+        private readonly IRobotInputController inputController;
+
+        public RobotController(IRobotView view, InputAction moveAction) : base(view)
         {
             this.view = view;
             statsCalculator = new RobotStatsCalculator();
@@ -33,7 +36,23 @@ namespace BattleBots.Robot
             }
 
             model = new RobotModel(sockets, 15f, 100f, 100f);
+
+            locomotionController = new RobotLocomotionController(view, model);
+            inputController = new RobotInputController(moveAction);
+
             RecalculateStats();
+        }
+
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+            inputController.Poll();
+        }
+
+        public override void OnFixedUpdate()
+        {
+            base.OnFixedUpdate();
+            locomotionController.Tick(inputController.MoveInput.y, inputController.MoveInput.x);
         }
 
         public bool PlacePart(PartDefinitionAsset definition, string socketId)
@@ -118,34 +137,6 @@ namespace BattleBots.Robot
             RecalculateStats();
             return true;
         }
-
-        public void Move(float moveInput, float turnInput)
-        {
-            if (view.RB == null) return;
-            if (model.stats.drivePower <= 0f) return;
-
-            float moveForce = model.stats.drivePower * view.MoveForceMultiplier;
-            float turnTorque = model.stats.drivePower * view.TurnTorqueMultiplier;
-
-            Vector3 forwardForce = view.Transform.forward * moveInput * moveForce;
-            view.RB.AddForce(forwardForce, ForceMode.Force);
-
-            float turnFactor = Mathf.Abs(moveInput) > 0.1f ? 1f : 0.35f;
-            float turnDirection = moveInput < 0f ? -1f : 1f;
-            Vector3 torque = Vector3.up * turnInput * turnTorque * turnFactor * turnDirection;
-            view.RB.AddTorque(torque, ForceMode.Force);
-
-            Vector3 horizontalVelocity = view.RB.linearVelocity;
-            horizontalVelocity.y = 0f;
-
-            float maxSpeed = 8f;
-            if (horizontalVelocity.magnitude > maxSpeed)
-            {
-                Vector3 limited = horizontalVelocity.normalized * maxSpeed;
-                view.RB.linearVelocity = new Vector3(limited.x, view.RB.linearVelocity.y, limited.z);
-            }
-        }
-
         public SocketModel GetSocket(string socketId)
         {
             return model.sockets.Find(s => s.id == socketId);
@@ -154,6 +145,11 @@ namespace BattleBots.Robot
         public RobotStatsModel GetStats()
         {
             return model.stats;
+        }
+
+        public RobotModel GetModel()
+        {
+            return model;
         }
     }
 }

@@ -1,8 +1,10 @@
-using Unity.VisualScripting;
-using UnityEngine;
+using BattleBots.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace BattleBots.Robot
 {
@@ -18,13 +20,13 @@ namespace BattleBots.Robot
         
         float MoveForceMultiplier { get; }
         float TurnTorqueMultiplier { get; }
-        void Move(float moveInput, float turnInput);
     }
 
     [RequireComponent(typeof(Rigidbody))]
     public class RobotView : MonoBehaviourView, IRobotView
     {
         private IRobotController controller;
+        private IRobotLocomotionController locomotionController;
 
         [SerializeField] private Rigidbody rb;
         public Rigidbody RB => rb;
@@ -46,7 +48,15 @@ namespace BattleBots.Robot
 
         protected override void CreateController()
         {
-            controller = new RobotController(this);
+            GarageInstaller installer = FindFirstObjectByType<GarageInstaller>();
+
+            if (installer == null)
+            {
+                Debug.LogWarning($"Installer not found");
+            }
+
+            controller = new RobotController(this, installer.Get<InputAction>());
+            locomotionController = new RobotLocomotionController(this, controller.GetModel());
         }
 
         protected override void Awake()
@@ -77,11 +87,6 @@ namespace BattleBots.Robot
         public bool RemovePart(string socketId)
         {
             return controller.RemovePart(socketId);
-        }
-
-        public void Move(float moveInput, float turnInput)
-        {
-            controller.Move(moveInput, turnInput);
         }
 
         public SocketModel GetSocket(string socketId)

@@ -1,5 +1,6 @@
 using BattleBots.Robot;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace BattleBots.BuildMode
 {
@@ -20,8 +21,10 @@ namespace BattleBots.BuildMode
         {
             socketView = null;
 
-            Ray ray = buildCamera.ScreenPointToRay(Input.mousePosition);
-            if (!Physics.Raycast(ray, out RaycastHit hit, maxDistance, socketLayerMask))
+            Vector2 mousePos = Mouse.current != null ? Mouse.current.position.ReadValue() : Vector2.zero;
+
+            Ray ray = buildCamera.ScreenPointToRay(mousePos);
+            if (!UnityEngine.Physics.Raycast(ray, out RaycastHit hit, maxDistance, socketLayerMask))
             {
                 return false;
             }

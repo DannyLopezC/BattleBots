@@ -4,6 +4,7 @@ using BattleBots.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace BattleBots.Bootstrap
 {
@@ -66,6 +67,7 @@ namespace BattleBots.Bootstrap
             Register<IPartCatalogView>(() => sceneReferences.PartCatalogView);
             Register<IRobotView>(() => sceneReferences.RobotView);
             Register<Camera>(() => sceneReferences.MainCamera);
+            Register<InputAction>(() => sceneReferences.MoveAction.action);
 
             Register<BuildSelectionModel>(() => new BuildSelectionModel());
             Register<BuildPreviewModel>(() => new BuildPreviewModel());

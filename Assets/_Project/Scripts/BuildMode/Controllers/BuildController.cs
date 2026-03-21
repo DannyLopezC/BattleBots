@@ -49,18 +49,6 @@ namespace BattleBots.BuildMode
 
             UpdatePreview();
 
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                SelectPart(view.WheelDefinition);
-                Debug.Log("Wheel selected");
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                SelectPart(view.SpinnerDefinition);
-                Debug.Log("Spinner selected");
-            }
-
             if (Input.GetMouseButtonDown(0))
             {
                 TryPlacePart();
@@ -76,7 +64,6 @@ namespace BattleBots.BuildMode
                 ClearSelection();
             }
 
-            HandleMovement();
         }
 
         public void SelectPart(PartDefinitionAsset definition)
@@ -152,19 +139,6 @@ namespace BattleBots.BuildMode
             selectionModel.Clear();
             previewModel.Clear();
             previewController.Hide();
-        }
-
-        private void HandleMovement()
-        {
-            float moveInput = 0f;
-            float turnInput = 0f;
-
-            if (Input.GetKey(KeyCode.W)) moveInput = 1f;
-            if (Input.GetKey(KeyCode.S)) moveInput = -1f;
-            if (Input.GetKey(KeyCode.A)) turnInput = -1f;
-            if (Input.GetKey(KeyCode.D)) turnInput = 1f;
-
-            robotView.Move(moveInput, turnInput);
         }
     }
 }

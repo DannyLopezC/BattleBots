@@ -587,7 +587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleBots.Robot.RobotView
   rb: {fileID: 2883442648719278016}
   moveForceMultiplier: 2
-  turnTorqueMultiplier: 2
+  turnTorqueMultiplier: 5
 --- !u!1 &7072099463029115715
 GameObject:
   m_ObjectHideFlags: 0
