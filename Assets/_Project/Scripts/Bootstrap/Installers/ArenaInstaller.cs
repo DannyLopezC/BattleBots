@@ -1,5 +1,6 @@
 using BattleBots.BattleMode;
 using BattleBots.BuildMode;
+using BattleBots.Core;
 using BattleBots.Robot;
 using BattleBots.UI;
 using System;
@@ -28,6 +29,9 @@ namespace BattleBots.Bootstrap
             Register<IBattleCameraView>(() => sceneReferences.BattleCameraView);
             Register<BattleHudView>(() => sceneReferences.HudView);
             Register<Transform>(() => sceneReferences.PlayerSpawnPoint);
+            Register<IRobotInputActions>(() => new BattleInputActions(
+                sceneReferences.MoveAction,
+                sceneReferences.WeaponAction));
         }
     }
 }

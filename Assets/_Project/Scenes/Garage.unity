@@ -194,6 +194,7 @@ MonoBehaviour:
   leftClickAction: {fileID: -5638761388123819791, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   rightClickAction: {fileID: -1100157241984446684, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   cancelAction: {fileID: -8161866246226944963, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  weaponAction: {fileID: 6912524649648128633, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &129249851
 GameObject:
   m_ObjectHideFlags: 0

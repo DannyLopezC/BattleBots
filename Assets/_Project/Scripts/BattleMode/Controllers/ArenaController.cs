@@ -37,7 +37,7 @@ namespace BattleBots.BattleMode
             robotView.RB.linearVelocity = Vector3.zero;
             robotView.RB.angularVelocity = Vector3.zero;
 
-            battleCameraView.SetTarget();
+            battleCameraView.SetTarget(robotView.Transform);
         }
     }
 }

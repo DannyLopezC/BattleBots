@@ -20,6 +20,7 @@ public class GarageSceneReferences : MonoBehaviour
     [SerializeField] private InputActionReference leftClickAction;
     [SerializeField] private InputActionReference rightClickAction;
     [SerializeField] private InputActionReference cancelAction;
+    [SerializeField] private InputActionReference weaponAction;
 
     public BuildView BuildView => buildView;
     public BuildPreviewView BuildPreviewView => buildPreviewView;
@@ -32,4 +33,5 @@ public class GarageSceneReferences : MonoBehaviour
     public InputActionReference LeftClickAction => leftClickAction;
     public InputActionReference RightClickAction => rightClickAction;
     public InputActionReference CancelAction => cancelAction;
+    public InputActionReference WeaponAction => weaponAction;
 }

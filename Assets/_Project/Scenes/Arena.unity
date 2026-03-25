@@ -153,6 +153,50 @@ Transform:
   - {fileID: 1813381266}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &435912596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 435912597}
+  - component: {fileID: 435912598}
+  m_Layer: 0
+  m_Name: ArenaView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &435912597
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435912596}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1864010819}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &435912598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435912596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cfbcdc2bd757cf429fd856adeaeeab5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleBots.BattleMode.ArenaView
 --- !u!1 &803708711
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,11 +242,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de6661957b3b30a4992ac8004efa8600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArenaSceneReferences
-  playerSpawnPoint: {fileID: 0}
-  arenaView: {fileID: 0}
-  battleCameraView: {fileID: 0}
-  playerRobotView: {fileID: 0}
+  playerSpawnPoint: {fileID: 1813381266}
+  arenaView: {fileID: 435912598}
+  battleCameraView: {fileID: 868262733}
+  playerRobotView: {fileID: 1043598854}
   hudView: {fileID: 0}
+  moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  weaponAction: {fileID: 6912524649648128633, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!114 &803708714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,11 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c9886163369f9145b477dce9f86348d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleBots.Bootstrap.ArenaInstaller
-  sceneReferences: {fileID: 0}
-  socketLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  snapDistance: 100
+  sceneReferences: {fileID: 803708713}
 --- !u!1 &837108287
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,6 +375,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837108287}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &868262731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 868262732}
+  - component: {fileID: 868262733}
+  m_Layer: 0
+  m_Name: BattleCameraView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &868262732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868262731}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1864010819}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &868262733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868262731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb2a25fecb1e06418ada37db33c2eb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleBots.BattleMode.BattleCameraView
 --- !u!1 &934343819
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,6 +589,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cfc0a5b9cdc24b45bf206da819c8e42, type: 3}
+--- !u!114 &1043598854 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4032417363090157743, guid: 4cfc0a5b9cdc24b45bf206da819c8e42, type: 3}
+  m_PrefabInstance: {fileID: 1043598853}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0753afb2d5ad290418c870d89b78da6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleBots.Robot.RobotView
 --- !u!1 &1323629487
 GameObject:
   m_ObjectHideFlags: 0
@@ -1167,6 +1264,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 803708712}
+  - {fileID: 435912597}
+  - {fileID: 868262732}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2106327064

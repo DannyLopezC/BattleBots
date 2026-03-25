@@ -13,8 +13,6 @@ namespace BattleBots.BattleMode
     {
         private IArenaController controller;
 
-        [SerializeField] private Transform playerSpawnPoint;
-
         protected override IMonoBehaviourController Controller()
         {
             return controller;
@@ -22,7 +20,7 @@ namespace BattleBots.BattleMode
 
         protected override void CreateController()
         {
-            GarageInstaller installer = FindFirstObjectByType<GarageInstaller>();
+            BaseInstaller installer = FindFirstObjectByType<BaseInstaller>();
 
             if (installer == null)
             {

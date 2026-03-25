@@ -23,8 +23,9 @@ namespace BattleBots.Robot
 
         private readonly IRobotLocomotionController locomotionController;
         private readonly IRobotInputController inputController;
+        private IWeaponView weaponView;
 
-        public RobotController(IRobotView view, InputAction moveAction) : base(view)
+        public RobotController(IRobotView view, InputAction moveAction, InputAction weaponAction) : base(view)
         {
             this.view = view;
             statsCalculator = new RobotStatsCalculator();
@@ -39,7 +40,7 @@ namespace BattleBots.Robot
             model = new RobotModel(sockets, 15f, 100f, 100f);
 
             locomotionController = new RobotLocomotionController(view, model);
-            inputController = new RobotInputController(moveAction);
+            inputController = new RobotInputController(moveAction, weaponAction);
 
             RecalculateStats();
             RecalculateCenterOfMass();
@@ -49,6 +50,9 @@ namespace BattleBots.Robot
         {
             base.OnUpdate();
             inputController.Poll();
+
+            weaponView?.SetActive(inputController.WeaponPressed);
+            weaponView?.Tick(Time.deltaTime);
         }
 
         public override void OnFixedUpdate()
@@ -107,6 +111,12 @@ namespace BattleBots.Robot
             RobotPartModel partModel = new RobotPartModel(definition);
             socketModel.SetPart(partModel, partView);
             model.parts.Add(partModel);
+
+            IWeaponView weaponView = instance.GetComponentInChildren<WeaponView>();
+            if (weaponView != null)
+            {
+                this.weaponView = weaponView;
+            }
 
             RecalculateStats();
             RecalculateCenterOfMass();

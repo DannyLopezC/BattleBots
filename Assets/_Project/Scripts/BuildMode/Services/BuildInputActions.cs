@@ -1,19 +1,30 @@
+using BattleBots.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace BattleBots.BuildMode
 {
-    public class BuildInputActions
+    public class BuildInputActions : IRobotInputActions
     {
-        public InputAction click;
-        public InputAction remove;
-        public InputAction cancel;
+        public InputAction LeftClickAction { get; }
+        public InputAction RightClickAction { get; }
+        public InputAction CancelAction { get; }
 
-        public BuildInputActions(InputAction click, InputAction remove, InputAction cancel)
+        public InputAction MoveAction { get; }
+        public InputAction WeaponAction { get; }
+
+        public BuildInputActions(
+            InputActionReference leftClick,
+            InputActionReference rightClick,
+            InputActionReference cancel,
+            InputActionReference weapon,
+            InputActionReference move)
         {
-            this.click = click;
-            this.remove = remove;
-            this.cancel = cancel;
+            LeftClickAction = leftClick.action;
+            RightClickAction = rightClick.action;
+            CancelAction = cancel.action;
+            WeaponAction = weapon.action;
+            MoveAction = move.action;
         }
     }
 }

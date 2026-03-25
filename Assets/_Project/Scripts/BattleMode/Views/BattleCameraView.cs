@@ -4,14 +4,14 @@ namespace BattleBots.BattleMode
 {
     public interface IBattleCameraView : IMonoBehaviourView
     {
-        void SetTarget();
+        void SetTarget(Transform robotT);
     }
 
     public class BattleCameraView : MonoBehaviourView, IBattleCameraView
     {
         private IBattleCameraController controller;
 
-        public void SetTarget()
+        public void SetTarget(Transform robotT)
         {
             throw new System.NotImplementedException();
         }

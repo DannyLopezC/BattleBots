@@ -1,4 +1,5 @@
 using BattleBots.Bootstrap;
+using BattleBots.Core;
 using BattleBots.Robot;
 using BattleBots.UI;
 using UnityEngine;
@@ -63,7 +64,7 @@ namespace BattleBots.BuildMode
                 installer.Get<IBuildPreviewController>(),
                 installer.Get<IRobotView>(),
                 installer.Get<IRobotStatsUIController>(),
-                installer.Get<BuildInputActions>()
+                installer.Get<IRobotInputActions>()
                 );
         }
 

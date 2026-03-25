@@ -1,4 +1,5 @@
 using BattleBots.BuildMode;
+using BattleBots.Core;
 using BattleBots.Robot;
 using BattleBots.UI;
 using System;
@@ -31,10 +32,12 @@ namespace BattleBots.Bootstrap
             Register<IPartCatalogView>(() => sceneReferences.PartCatalogView);
             Register<IRobotView>(() => sceneReferences.RobotView);
             Register<Camera>(() => sceneReferences.MainCamera);
-            Register<InputAction>(() => sceneReferences.MoveAction.action);
-            Register<BuildInputActions>(() => new BuildInputActions(sceneReferences.LeftClickAction,
+            Register<IRobotInputActions>(() => new BuildInputActions(
+                sceneReferences.LeftClickAction,
                 sceneReferences.RightClickAction,
-                sceneReferences.CancelAction));
+                sceneReferences.CancelAction,
+                sceneReferences.WeaponAction,
+                sceneReferences.MoveAction));
 
             Register<BuildSelectionModel>(() => new BuildSelectionModel());
             Register<BuildPreviewModel>(() => new BuildPreviewModel());

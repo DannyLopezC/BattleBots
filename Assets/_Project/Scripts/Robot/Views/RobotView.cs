@@ -1,4 +1,5 @@
 using BattleBots.Bootstrap;
+using BattleBots.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,6 @@ namespace BattleBots.Robot
     public class RobotView : MonoBehaviourView, IRobotView
     {
         private IRobotController controller;
-        private IRobotLocomotionController locomotionController;
 
         [SerializeField] private Rigidbody rb;
         public Rigidbody RB => rb;
@@ -48,15 +48,16 @@ namespace BattleBots.Robot
 
         protected override void CreateController()
         {
-            GarageInstaller installer = FindFirstObjectByType<GarageInstaller>();
+            BaseInstaller installer = FindFirstObjectByType<BaseInstaller>();
 
             if (installer == null)
             {
                 Debug.LogWarning($"Installer not found");
             }
 
-            controller = new RobotController(this, installer.Get<InputAction>());
-            locomotionController = new RobotLocomotionController(this, controller.GetModel());
+            IRobotInputActions inputActions = installer.Get<IRobotInputActions>();
+
+            controller = new RobotController(this, inputActions.MoveAction, inputActions.WeaponAction);
         }
 
         protected override void Awake()

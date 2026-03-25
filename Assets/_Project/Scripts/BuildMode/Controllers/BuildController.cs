@@ -32,7 +32,7 @@ namespace BattleBots.BuildMode
             IBuildPreviewController buildPreviewController,
             IRobotView robotView,
             IRobotStatsUIController statsUIController,
-            BuildInputActions buildInput) : base(view)
+            IRobotInputActions buildInput) : base(view)
         {
             this.view = view;
 
@@ -43,7 +43,7 @@ namespace BattleBots.BuildMode
             this.previewController = buildPreviewController;
             this.robotView = robotView;
             this.statsUIController = statsUIController;
-            this.buildInput = buildInput;
+            this.buildInput = (BuildInputActions)buildInput;
         }
 
         public override void OnUpdate()
@@ -52,17 +52,17 @@ namespace BattleBots.BuildMode
 
             UpdatePreview();
 
-            if (buildInput.click.triggered)
+            if (buildInput.LeftClickAction.triggered)
             {
                 TryPlacePart();
             }
 
-            if (buildInput.remove.triggered)
+            if (buildInput.RightClickAction.triggered)
             {
                 TryRemovePart();
             }
 
-            if (buildInput.cancel.triggered)
+            if (buildInput.CancelAction.triggered)
             {
                 ClearSelection();
             }

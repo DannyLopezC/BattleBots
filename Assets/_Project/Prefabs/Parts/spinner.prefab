@@ -123,6 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8524476810185290961}
   - component: {fileID: 1830800776620633860}
+  - component: {fileID: 5023951481010857615}
   m_Layer: 0
   m_Name: spinner
   m_TagString: Untagged
@@ -158,3 +159,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad194faef5125041b259c983d2722de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleBots.Robot.RobotPartView
+--- !u!114 &5023951481010857615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8848609637612624307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7de00a040f6294f9d578fd8d81e69b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleBots.Robot.WeaponView
+  spinnerVisual: {fileID: 5431984591068105747}
+  weaponDefinitionAsset: {fileID: 11400000, guid: 61767b883d7a19d4f884dfe9dc40088a, type: 2}
