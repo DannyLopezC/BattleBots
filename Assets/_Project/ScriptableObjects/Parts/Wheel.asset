@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleBots.Robot.PartDefinitionAsset
   partName: Wheel
   partType: 4
-  mass: 2
+  mass: 10
   maxHp: 5
   prefab: {fileID: 5755439132683074570, guid: 259b9ebebf32dd84d9b0e0ff3095be60, type: 3}
   icon: {fileID: -465790899, guid: 8a9a9ed8383bba740a82a7d16df05f17, type: 3}

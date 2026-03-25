@@ -22,6 +22,7 @@ namespace BattleBots.BuildMode
         private readonly IBuildPreviewController previewController;
         private readonly IRobotView robotView;
         private readonly IRobotStatsUIController statsUIController;
+        private readonly BuildInputActions buildInput;
 
         public BuildController(IBuildView view,
             BuildSelectionModel selectionModel,
@@ -30,7 +31,8 @@ namespace BattleBots.BuildMode
             PartPlacementValidator partPlacementValidator,
             IBuildPreviewController buildPreviewController,
             IRobotView robotView,
-            IRobotStatsUIController statsUIController) : base(view)
+            IRobotStatsUIController statsUIController,
+            BuildInputActions buildInput) : base(view)
         {
             this.view = view;
 
@@ -41,6 +43,7 @@ namespace BattleBots.BuildMode
             this.previewController = buildPreviewController;
             this.robotView = robotView;
             this.statsUIController = statsUIController;
+            this.buildInput = buildInput;
         }
 
         public override void OnUpdate()
@@ -49,17 +52,17 @@ namespace BattleBots.BuildMode
 
             UpdatePreview();
 
-            if (Input.GetMouseButtonDown(0))
+            if (buildInput.click.triggered)
             {
                 TryPlacePart();
             }
 
-            if (Input.GetMouseButtonDown(1))
+            if (buildInput.remove.triggered)
             {
                 TryRemovePart();
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (buildInput.cancel.triggered)
             {
                 ClearSelection();
             }

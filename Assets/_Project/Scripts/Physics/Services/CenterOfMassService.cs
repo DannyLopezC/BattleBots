@@ -33,7 +33,7 @@ namespace BattleBots.Physics
             Vector3 worldCenter = weighted / totalMass;
             Vector3 localcenter = root.InverseTransformPoint(worldCenter);
 
-            //localcenter.y -= 0.15f;
+            localcenter.y -= 0.4f;
             rb.centerOfMass = localcenter;
         }
     }

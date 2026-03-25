@@ -14,7 +14,12 @@ public class GarageSceneReferences : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private List<PartDefinitionAsset> availableParts;
     [SerializeField] private RobotStatsPanelView robotStatsPanelView;
+
+    // input references
     [SerializeField] private InputActionReference moveAction;
+    [SerializeField] private InputActionReference leftClickAction;
+    [SerializeField] private InputActionReference rightClickAction;
+    [SerializeField] private InputActionReference cancelAction;
 
     public BuildView BuildView => buildView;
     public BuildPreviewView BuildPreviewView => buildPreviewView;
@@ -24,4 +29,7 @@ public class GarageSceneReferences : MonoBehaviour
     public List<PartDefinitionAsset> AvailableParts => availableParts;
     public RobotStatsPanelView RobotStatsPanelView => robotStatsPanelView;
     public InputActionReference MoveAction => moveAction;
+    public InputActionReference LeftClickAction => leftClickAction;
+    public InputActionReference RightClickAction => rightClickAction;
+    public InputActionReference CancelAction => cancelAction;
 }

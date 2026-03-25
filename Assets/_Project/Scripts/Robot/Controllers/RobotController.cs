@@ -1,3 +1,4 @@
+using BattleBots.Physics;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +42,7 @@ namespace BattleBots.Robot
             inputController = new RobotInputController(moveAction);
 
             RecalculateStats();
+            RecalculateCenterOfMass();
         }
 
         public override void OnUpdate()
@@ -107,6 +109,7 @@ namespace BattleBots.Robot
             model.parts.Add(partModel);
 
             RecalculateStats();
+            RecalculateCenterOfMass();
             return true;
         }
 
@@ -135,6 +138,7 @@ namespace BattleBots.Robot
 
             socketModel.Clear();
             RecalculateStats();
+            RecalculateCenterOfMass();
             return true;
         }
         public SocketModel GetSocket(string socketId)
@@ -150,6 +154,27 @@ namespace BattleBots.Robot
         public RobotModel GetModel()
         {
             return model;
+        }
+
+        private IEnumerable<RobotPartView> GetPlacedPartViews()
+        {
+            foreach (SocketModel socket in model.sockets)
+            {
+                if(socket.isOccupied && socket.currentPartView != null)
+                {
+                    yield return socket.currentPartView;
+                }
+            }
+        }
+
+        private void RecalculateCenterOfMass()
+        {
+            CenterOfMassService.Recalculate(
+                view.RB,
+                view.Transform,
+                GetPlacedPartViews(),
+                model.BaseMass
+            );
         }
     }
 }

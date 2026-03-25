@@ -49,7 +49,7 @@ namespace BattleBots.Robot
 
             ApplyForwardForce(moveInput);
             ApplyTurnTorque(moveInput, turnInput);
-            //ApplyLateralGrip();
+            ApplyLateralGrip();
             ClampHorizontalSpeed();
         }
 
@@ -58,7 +58,7 @@ namespace BattleBots.Robot
             if (Mathf.Abs(moveInput) < 0.01f) return;
 
             float moveForce = model.stats.drivePower * view.MoveForceMultiplier;
-            //float multiplier = moveInput < 0.0f ? reverseMultiplier : 1f;
+            float multiplier = moveInput < 0.0f ? reverseMultiplier : 1f;
 
             Vector3 force = view.Transform.forward * moveInput * moveForce; // * multiplier;
             rb.AddForce(force, ForceMode.Force);

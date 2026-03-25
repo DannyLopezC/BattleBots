@@ -68,6 +68,9 @@ namespace BattleBots.Bootstrap
             Register<IRobotView>(() => sceneReferences.RobotView);
             Register<Camera>(() => sceneReferences.MainCamera);
             Register<InputAction>(() => sceneReferences.MoveAction.action);
+            Register<BuildInputActions>(() => new BuildInputActions(sceneReferences.LeftClickAction,
+                sceneReferences.RightClickAction,
+                sceneReferences.CancelAction));
 
             Register<BuildSelectionModel>(() => new BuildSelectionModel());
             Register<BuildPreviewModel>(() => new BuildPreviewModel());

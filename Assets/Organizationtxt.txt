@@ -31,11 +31,11 @@ Goal: to be able to build without touching code for each part
 
 Phase 3:
 Checklist:
-- basic wheeled locomotion
-- turn
-- player input
-- reasonable center of mass
-- minimum stability
+/ basic wheeled locomotion
+/ turn
+x player input
+x reasonable center of mass
+x minimum stability
 
 Goal: to move the built robot
 

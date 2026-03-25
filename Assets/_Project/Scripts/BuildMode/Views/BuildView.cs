@@ -62,7 +62,8 @@ namespace BattleBots.BuildMode
                 installer.Get<PartPlacementValidator>(),
                 installer.Get<IBuildPreviewController>(),
                 installer.Get<IRobotView>(),
-                installer.Get<IRobotStatsUIController>()
+                installer.Get<IRobotStatsUIController>(),
+                installer.Get<BuildInputActions>()
                 );
         }
 

@@ -233,7 +233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5041107237645282914
 Transform:
   m_ObjectHideFlags: 0
@@ -520,6 +520,7 @@ GameObject:
   - component: {fileID: 6844794510834289469}
   - component: {fileID: 2883442648719278016}
   - component: {fileID: 4032417363090157743}
+  - component: {fileID: 3597687980474926306}
   m_Layer: 0
   m_Name: basic_chasis
   m_TagString: Untagged
@@ -571,7 +572,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 16
   m_CollisionDetection: 0
 --- !u!114 &4032417363090157743
 MonoBehaviour:
@@ -588,6 +589,20 @@ MonoBehaviour:
   rb: {fileID: 2883442648719278016}
   moveForceMultiplier: 2
   turnTorqueMultiplier: 5
+--- !u!114 &3597687980474926306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5750747711311045080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31d4e90bad5dcdd4a8acc824378e18d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleBots.Physics.CenterOfMassDebugDrawer
+  targetRb: {fileID: 2883442648719278016}
+  sphereRadius: 1
 --- !u!1 &7072099463029115715
 GameObject:
   m_ObjectHideFlags: 0
