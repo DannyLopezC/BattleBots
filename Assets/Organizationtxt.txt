@@ -124,10 +124,10 @@ Assets/Project/
  │    │	│	└── WeaponStateModel (C#): runtime state of weapon (active?, rpm if spinner, cooldwon, power use)
  │    │	├── Controllers/
  │    │	│	├── |RobotController (C#): main controller of a robot (connect model and view, answer to changes, ask for stats calculation, delegate locomotio/weapon/damage  to smaller systems)
- │    │	│	├── RobotLocomotionController (C#): translate input to robot movement (robot stats, physic view, wheels/engines availables)
+ │    │	│	├── |RobotLocomotionController (C#): translate input to robot movement (robot stats, physic view, wheels/engines availables)
  │    │	│	├── RobotWeaponController (C#): activate, deactivate and update weapon placed
  │    │	│	├── RobotDamageController (C#): apply damage to the robot by parts, decide detach or destruction by part
- │    │	│	└── RobotInputController (C#): translate local playe input into movement or weapon commands
+ │    │	│	└── |RobotInputController (C#): translate local playe input into movement or weapon commands
  │    │	├── Views/
  │    │	│	├── |RobotView (Monobehaviour): represent robot root on the scene (root rigidbody, visual sockets references, parts root, visual/debug helper)
  │    │	│	├── |RobotPartView (Monobehaviour): represent a specific part placed (reproduce damage, visual detach, report collisions)
@@ -157,11 +157,11 @@ Assets/Project/
  │    │	├── Controllers/
  │    │	│	├── |BuildController (C#): main controller of the building mode (listen input, update preview, validate placement, execute place/remove, update robot and UI)
  │    │	│	├── BuildInputController (C#): translate user input into building actions (select, place, remove, rotate)
- │    │	│	├── BuildPreviewController (C#): control the visual preview with the logic state
+ │    │	│	├── |BuildPreviewController (C#): control the visual preview with the logic state
  │    │	│	└── PartCatalogController (C#): connect UI catalog with selection of the build mode
  │    │	├── Views/
  │    │	│	├── |BuildView (Monobehaviour): represents the building mode
- │    │	│	├── BuildPreviewView (Monobehaviour): show part ghost, green/red depending on validity, follo curren socket
+ │    │	│	├── |BuildPreviewView (Monobehaviour): show part ghost, green/red depending on validity, follo curren socket
  │    │	│	├── *BuildGridView (Monobehaviour): if clear representation of the layout/socket in building mode wanted
  │    │	│	├── SocketHighlighView (Monobehaviour): highlight valid sockets
  │    │	│	└── GarageCameraView (Monobehaviour): camera/orbit on the building mode
@@ -184,11 +184,11 @@ Assets/Project/
  │    │	│	├── PlayerBattleController (C#): player input during combat
  │    │	│	├── BotBattleController (C#): controller of the enemy bot using AI
  │    │	│	├── WeaponCollisionController (C#): receive collision events from weapons and send them to BattleController or DamageResolver
- │    │	│	└── ArenaController (C#): control elements in the arena (limits, hazards*, match restart)
+ │    │	│	└── |ArenaController (C#): control elements in the arena (limits, hazards*, match restart)
  │    │	├── Views/
- │    │	│	├── ArenaView (Monobehaviour): visual references from the arena
- │    │	│	├── BattleHudView (Monobehaviour): show hp, part state, math messages
- │    │	│	├── BattleCameraView (Monobehaviour): combat camera
+ │    │	│	├── |ArenaView (Monobehaviour): visual references from the arena
+ │    │	│	├── |BattleHudView (Monobehaviour): show hp, part state, math messages
+ │    │	│	├── |BattleCameraView (Monobehaviour): combat camera
  │    │	│	└── *ImpactVfxView (Monobehaviour): sparks, smoke, visual feedback of impact
  │    │	├── Rules/
  │    │	│	├── DamageResolver (C#): calculate how much damage makes an impact (relative vel, mass, weapon type, multipliers)
@@ -203,7 +203,7 @@ Assets/Project/
  │    ├── UI/
  │    │	├── Views/
  │    │	│	├── |PartCatalogView (Monobehaviour): buttons of available parts
- │    │	│	├── RobotStatsPanelView (Monobehaviour): show added stats to the robot
+ │    │	│	├── |RobotStatsPanelView (Monobehaviour): show added stats to the robot
  │    │	│	├── PartDetailsPanelView (Monobehaviour): show selected part details
  │    │	│	├── BuildToolBarView (Monobehaviour): rotate, remote, test, battle buttons
  │    │	│	└── *MainMenuView (Monobehaviour): basic main menu
@@ -222,11 +222,11 @@ Assets/Project/
  │    ├── Physics/
  │    │	├── Services/
  │    │	│	├── FoceApplicationService (C#): helpers to apply force/torques consistently
- │    │	│	├── CenterOfMassService (C#): apply/adjust center of mass to the rigidbody root following the robot assembly
+ │    │	│	├── |CenterOfMassService (C#): apply/adjust center of mass to the rigidbody root following the robot assembly
  │    │	│	├── *JointSetupService (C#): if using specific joints for certain parts
  │    │	│	└── CollisionAnalysisService (C#): convert Unity collission in useful data for the combat
  │    │	├── Debug/
- │    │	│	├── CenterOfMassDebugDrawer (Monobehaviour): draw center of mass
+ │    │	│	├── |CenterOfMassDebugDrawer (Monobehaviour): draw center of mass
  │    │	│	├── ForceDebugDrawer (Monobehaviour): draw forces and impact directions
  │    │	│	└── CollisionDebugDrawer (Monobehaviour): draw impact points and normals
  │    │	└── Helpers/
@@ -235,11 +235,11 @@ Assets/Project/
  │    └── Bootstrap/
  │    	├── Installers/
  │    	│	├── |GarageInstaller (Monobehaviour): build and connect all systems needed for Garage (create services, connect UI with build mode, init build robot)
- │    	│	├── ArenaInstaller (Monobehaviour): build and connect all systems needed for Arena (spawn robots, init battle systems, connect HUD)
+ │    	│	├── |ArenaInstaller (Monobehaviour): build and connect all systems needed for Arena (spawn robots, init battle systems, connect HUD)
  │    	│	└── *ProjectInstaller (Monobehaviour): global services between scenes
  │    	├── SceneReferences/
  │    	│	├── |GarageSceneReferences (Monobehaviour): expose all references needed for Garage (robot root, camera, paneles, anchorage point)
- │    	│	└── ArenaSceneReferences (Monobehaviour): expose all references needed for arena (spawn points, HUD, arena view, cameras) 
+ │    	│	└── |ArenaSceneReferences (Monobehaviour): expose all references needed for arena (spawn points, HUD, arena view, cameras) 
  │    	└── Coordinator/
  │    		├── GameModeCoordinator (Monobehaviour posible c#): manage entry and exit of modes or scenes
  │    		├── *SceneLoadCoordinator (Monobehaviour): if managing scene loads with persisting data

@@ -9,15 +9,11 @@ using UnityEngine.InputSystem;
 namespace BattleBots.Bootstrap
 {
     [DefaultExecutionOrder(-100)]
-    public class GarageInstaller : MonoBehaviour
+    public class GarageInstaller : BaseInstaller
     {
         [SerializeField] private GarageSceneReferences sceneReferences;
         [SerializeField] private LayerMask socketLayerMask;
         [SerializeField] private float snapDistance = 100f;
-
-        private readonly Dictionary<Type, Func<object>> factories = new();
-        private readonly Dictionary<Type, object> services = new();
-        private readonly HashSet<Type> currentlyResolving = new();
 
         public GarageSceneReferences SceneReferences => sceneReferences;
 
@@ -26,39 +22,7 @@ namespace BattleBots.Bootstrap
             RegisterDependencies();
         }
 
-        public void Register<T>(Func<T> factory) where T : class
-        {
-            factories[typeof(T)] = () => factory();
-            services.Remove(typeof(T));
-        }
-
-        public T Get<T>() where T : class
-        {
-            Type type = typeof(T);
-
-            if (currentlyResolving.Contains(type))
-            {
-                Debug.LogError($"GarageInstaller circular dependency: {type}");
-                return null;
-            }
-
-            if (!services.ContainsKey(type))
-            {
-                if (!factories.ContainsKey(type))
-                {
-                    Debug.LogError($"GarageInstaller missing factory for type: {type}");
-                    return null;
-                }
-
-                currentlyResolving.Add(type);
-                services[type] = factories[type]();
-                currentlyResolving.Remove(type);
-            }
-
-            return services[type] as T;
-        }
-
-        private void RegisterDependencies()
+        protected override void RegisterDependencies()
         {
             Register<IBuildController>(() =>
                 sceneReferences.BuildView.GetController);
